@@ -30,7 +30,7 @@ public class OperationsAdapter extends RecyclerView.Adapter<OperationViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull OperationViewHolder holder, int position) {
-        holder.getTextView().setText(data.get(position).getTitle());
+        holder.setTitle(data.get(position).getTitleId(), data.get(position).getTime());
     }
 
     @Override

@@ -1,19 +1,25 @@
 package com.example.benchmarks.domain.models;
 
+import androidx.annotation.StringRes;
+
 import com.example.benchmarks.domain.models.operation.Operation;
 
 public class OperationItem<O extends Operation> {
     O operation;
-    String title;
+    @StringRes int titleId;
     Long time = 0L;
 
-    public OperationItem(O operation, String title) {
+    public OperationItem(O operation, @StringRes int titleId) {
         this.operation = operation;
-        this.title = title;
+        this.titleId = titleId;
     }
 
-    public String getTitle() {
-        return title;
+    public int getTitleId() {
+        return titleId;
+    }
+
+    public Long getTime() {
+        return time;
     }
 
 }

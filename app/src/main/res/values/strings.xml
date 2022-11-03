@@ -2,4 +2,14 @@
     <string name="app_name">BenchMarks</string>
     <string name="collections_tab_name">Collections</string>
     <string name="maps_tab_name">Maps</string>
+    <string name="add_b_al">Adding in the beginning\nArrayList %1$s ms</string>
+    <string name="add_b_ll">Adding in the beginning\nLinkedList %1$s ms</string>
+    <string name="add_b_cl">Adding in the beginning\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="add_m_al">Adding in the middle\nArrayList %1$s ms</string>
+    <string name="add_m_ll">Adding in the middle\nLinkedList %1$s ms</string>
+    <string name="add_m_cl">Adding in the middle\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="add_e_al">Adding in the end\nArrayList %1$s ms</string>
+    <string name="add_e_ll">Adding in the end\nLinkedList %1$s ms</string>
+    <string name="add_e_cl">Adding in the end\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="empty_time">N / A</string>
 </resources>
