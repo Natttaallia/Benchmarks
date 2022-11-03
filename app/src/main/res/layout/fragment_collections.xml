@@ -1,55 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/collection_tab_cslayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+  <include
+      android:id="@+id/input_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      layout="@layout/input_view"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/collections_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/input_layout">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/c_operations_amount_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Start"
-        app:layout_constraintBottom_toTopOf="@+id/collections_rv"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/c_operations_amount_layout"
+    <ProgressBar
+        android:id="@+id/fragment_collections_pb"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:errorEnabled="true"
-        app:layout_constraintBottom_toTopOf="@+id/collections_rv"
-        app:layout_constraintEnd_toStartOf="@+id/c_operations_amount_btn"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/c_operations_amount_input"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Elements amount:"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

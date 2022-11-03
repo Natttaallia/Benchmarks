@@ -4,7 +4,7 @@ public abstract class CustomCollection<T> {
 
     T data;
 
-    public void initialize(T data) {
+    public CustomCollection(T data) {
         this.data = data;
     }
 

@@ -3,8 +3,9 @@ package com.example.benchmarks.domain.models.operation;
 import com.example.benchmarks.domain.models.collection.CustomCollection;
 import com.example.benchmarks.domain.models.position.Position;
 
-public class AddOperation<P extends Position, C extends CustomCollection> extends Operation<P, C>{
-    public AddOperation(P position, C collection) {
+public class AddOperation extends Operation {
+
+    public AddOperation(Position position, CustomCollection collection) {
         super(position, collection);
     }
 

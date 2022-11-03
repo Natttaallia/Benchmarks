@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,9 +21,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class CollectionsFragment extends Fragment {
-    private int operationsAmount;
     private TextInputLayout mOperationsAmountLayout;
     private TextInputEditText mOperationsAmountInput;
+    private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private OperationsAdapter mAdapter;
     private CollectionsViewModel viewModel;
@@ -33,42 +35,46 @@ public class CollectionsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel = new ViewModelProvider(this).get(CollectionsViewModel.class);
-        mRecyclerView = view.findViewById(R.id.collections_rv);
-        initRecyclerView();
 
+        mProgressBar = view.findViewById(R.id.fragment_collections_pb);
+        mRecyclerView = view.findViewById(R.id.collections_rv);
         mOperationsAmountInput = view.findViewById(R.id.c_operations_amount_input);
         mOperationsAmountLayout = view.findViewById(R.id.c_operations_amount_layout);
-        final Button operationsAmountButton = view.findViewById(R.id.c_operations_amount_btn);
-        operationsAmountButton.setOnClickListener(this::onButtonClick);
-
+        Button mOperationsAmountButton = view.findViewById(R.id.c_operations_amount_btn);
+        initRecyclerView();
+        observeCollectionSize();
         observeOperations();
+        observeCollections();
+        mOperationsAmountButton.setOnClickListener(this::onButtonClick);
+    }
+
+    private void observeCollectionSize() {
+        ((MainActivity) getActivity()).getCollectionSize().observe(getViewLifecycleOwner(), size -> {
+            viewModel.createCollections(size);
+        });
+    }
+
+    private void observeCollections() {
+        viewModel.collections.observe(getViewLifecycleOwner(), triple -> {
+            viewModel.loadOperationsItem();
+            mProgressBar.setVisibility(View.GONE);
+        });
     }
 
     private void observeOperations() {
-        viewModel.getOperations().observe(getViewLifecycleOwner(), operationItems -> {
+        viewModel.operations.observe(getViewLifecycleOwner(), operationItems -> {
             mAdapter.setData(operationItems);
         });
     }
 
     private void onButtonClick(View view) {
-        String input = mOperationsAmountInput.getText().toString();
-        int operationsAmount = 0;
-        int collectionSize = ((MainActivity) getActivity()).getCollectionSize();
-        try {
-            operationsAmount = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            setInputErrorText("Enter a number.");
-        }
-        if (operationsAmount >= collectionSize) {
-            setInputErrorText("Try less operations.");
-        } else if (operationsAmount <= 0) {
-            setInputErrorText("Try more operations.");
+        if (viewModel.checkOperationsAmount(mOperationsAmountInput.getText().toString())) {
+            viewModel.startCalculation();
         } else {
-            this.operationsAmount = operationsAmount;
-            startCalculations();
+            setInputErrorText(getString(R.string.invalid_input));
         }
     }
 
@@ -81,9 +87,5 @@ public class CollectionsFragment extends Fragment {
         mAdapter = new OperationsAdapter();
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void startCalculations() {
-
     }
 }

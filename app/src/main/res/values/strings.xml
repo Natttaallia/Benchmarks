@@ -12,4 +12,7 @@
     <string name="add_e_ll">Adding in the end\nLinkedList %1$s ms</string>
     <string name="add_e_cl">Adding in the end\nCopyOnWriteArrayList %1$s ms</string>
     <string name="empty_time">N / A</string>
+    <string name="start">Start</string>
+    <string name="elements_amount">Elements amount:</string>
+    <string name="invalid_input">Invalid input</string>
 </resources>

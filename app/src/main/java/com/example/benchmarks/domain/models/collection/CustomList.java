@@ -4,6 +4,10 @@ import java.util.List;
 
 public class CustomList<T extends List> extends CustomCollection<T> {
 
+    public CustomList(T data) {
+        super(data);
+    }
+
     @Override
     public int size() {
         return data.size();

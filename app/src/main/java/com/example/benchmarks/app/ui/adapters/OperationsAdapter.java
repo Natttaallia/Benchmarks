@@ -12,13 +12,13 @@ import com.example.benchmarks.R;
 import com.example.benchmarks.domain.models.OperationItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OperationsAdapter extends RecyclerView.Adapter<OperationViewHolder> {
     private ArrayList<OperationItem> data = new ArrayList<>();
 
     public void setData(ArrayList<OperationItem> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     @NonNull

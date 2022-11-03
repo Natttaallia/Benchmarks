@@ -3,6 +3,8 @@ package com.example.benchmarks.app.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -15,9 +17,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity implements CollectionSizeDialog.CollectionSizeDialogListener {
 
-    private int collectionSize;
+    private final MutableLiveData<Integer> collectionSize = new MutableLiveData<>();
 
-    public int getCollectionSize() {
+    public LiveData<Integer> getCollectionSize() {
         return collectionSize;
     }
 
@@ -40,11 +42,10 @@ public class MainActivity extends AppCompatActivity implements CollectionSizeDia
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.add(android.R.id.content,
                 dialog).commit();
-//        dialog.show(getSupportFragmentManager(), CollectionSizeDialog.TAG);
     }
 
     @Override
     public void sendSize(int size) {
-        collectionSize = size;
+        collectionSize.postValue(size);
     }
 }
