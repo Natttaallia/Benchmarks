@@ -11,6 +11,15 @@
     <string name="add_e_al">Adding in the end\nArrayList %1$s ms</string>
     <string name="add_e_ll">Adding in the end\nLinkedList %1$s ms</string>
     <string name="add_e_cl">Adding in the end\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="remove_b_al">Removing from the beginning\nArrayList %1$s ms</string>
+    <string name="remove_b_ll">Removing from the beginning\nLinkedList %1$s ms</string>
+    <string name="remove_b_cl">Removing from the beginning\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="remove_m_al">Removing from the middle\nArrayList %1$s ms</string>
+    <string name="remove_m_ll">Removing from the middle\nLinkedList %1$s ms</string>
+    <string name="remove_m_cl">Removing from the middle\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="remove_e_al">Removing from the end\nArrayList %1$s ms</string>
+    <string name="remove_e_ll">Removing from the end\nLinkedList %1$s ms</string>
+    <string name="remove_e_cl">Removing from the end\nCopyOnWriteArrayList %1$s ms</string>
     <string name="empty_time">N / A</string>
     <string name="start">Start</string>
     <string name="elements_amount">Elements amount:</string>

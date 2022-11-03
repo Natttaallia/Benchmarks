@@ -11,4 +11,6 @@ public abstract class CustomCollection<T> {
     public abstract int size();
 
     public abstract void add(int index, Integer element);
+
+    public abstract void remove(int position);
 }

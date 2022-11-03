@@ -4,6 +4,7 @@ import com.example.benchmarks.R;
 import com.example.benchmarks.domain.models.OperationItem;
 import com.example.benchmarks.domain.models.collection.CustomList;
 import com.example.benchmarks.domain.models.operation.AddOperation;
+import com.example.benchmarks.domain.models.operation.RemoveOperation;
 import com.example.benchmarks.domain.models.position.EndPosition;
 import com.example.benchmarks.domain.models.position.MiddlePosition;
 import com.example.benchmarks.domain.models.position.Position;
@@ -34,6 +35,15 @@ public class OperationsFactory {
         arrayList.add(new OperationItem(new AddOperation(endPosition, new CustomList<>(new ArrayList(collections.component1()))), R.string.add_e_al));
         arrayList.add(new OperationItem(new AddOperation(endPosition, new CustomList<>(new LinkedList(collections.component2()))), R.string.add_e_ll));
         arrayList.add(new OperationItem(new AddOperation(endPosition, new CustomList<>(new CopyOnWriteArrayList(collections.component3()))), R.string.add_e_cl));
+        arrayList.add(new OperationItem(new RemoveOperation(startPosition, new CustomList<>(new ArrayList(collections.component1()))), R.string.remove_b_al));
+        arrayList.add(new OperationItem(new RemoveOperation(startPosition, new CustomList<>(new LinkedList(collections.component2()))), R.string.remove_b_ll));
+        arrayList.add(new OperationItem(new RemoveOperation(startPosition, new CustomList<>(new CopyOnWriteArrayList(collections.component3()))), R.string.remove_b_cl));
+        arrayList.add(new OperationItem(new RemoveOperation(middlePosition, new CustomList<>(new ArrayList(collections.component1()))), R.string.remove_m_al));
+        arrayList.add(new OperationItem(new RemoveOperation(middlePosition, new CustomList<>(new LinkedList(collections.component2()))), R.string.remove_m_ll));
+        arrayList.add(new OperationItem(new RemoveOperation(middlePosition, new CustomList<>(new CopyOnWriteArrayList(collections.component3()))), R.string.remove_m_cl));
+        arrayList.add(new OperationItem(new RemoveOperation(endPosition, new CustomList<>(new ArrayList(collections.component1()))), R.string.remove_e_al));
+        arrayList.add(new OperationItem(new RemoveOperation(endPosition, new CustomList<>(new LinkedList(collections.component2()))), R.string.remove_e_ll));
+        arrayList.add(new OperationItem(new RemoveOperation(endPosition, new CustomList<>(new CopyOnWriteArrayList(collections.component3()))), R.string.remove_e_cl));
         return arrayList;
     }
 

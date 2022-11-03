@@ -17,4 +17,9 @@ public class CustomList<T extends List> extends CustomCollection<T> {
     public void add(int index, Integer element) {
         data.add(index, element);
     }
+
+    @Override
+    public void remove(int position) {
+        data.remove(position);
+    }
 }
