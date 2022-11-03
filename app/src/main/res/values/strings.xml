@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BenchMarks</string>
+    <string name="collections_tab_name">Collections</string>
+    <string name="maps_tab_name">Maps</string>
 </resources>
