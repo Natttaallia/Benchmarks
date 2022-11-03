@@ -1,11 +1,12 @@
 package com.example.benchmarks.domain.models.collection;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class CustomArrayList<T extends ArrayList> extends CustomCollection<T> {
+public class CustomList<T extends List> extends CustomCollection<T> {
 
-    public CustomArrayList(int size) {
-        super(size);
+    @Override
+    public int size() {
+        return data.size();
     }
 
     @Override

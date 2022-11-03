@@ -12,4 +12,8 @@ public class OperationItem<O extends Operation> {
         this.title = title;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
 }
