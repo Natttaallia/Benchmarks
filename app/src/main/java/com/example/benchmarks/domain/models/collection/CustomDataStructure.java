@@ -11,4 +11,6 @@ public abstract class CustomDataStructure<T> {
     public abstract void add(Integer element);
 
     public abstract void remove();
+
+    public abstract void search();
 }

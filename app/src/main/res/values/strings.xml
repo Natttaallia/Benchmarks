@@ -20,6 +20,9 @@
     <string name="remove_e_al">Removing from the end\nArrayList %1$s ms</string>
     <string name="remove_e_ll">Removing from the end\nLinkedList %1$s ms</string>
     <string name="remove_e_cl">Removing from the end\nCopyOnWriteArrayList %1$s ms</string>
+    <string name="search_al">Search in the \nArrayList %1$s ms</string>
+    <string name="search_ll">Search in the \nLinkedList %1$s ms</string>
+    <string name="search_cl">Search in the \nCopyOnWriteArrayList %1$s ms</string>
     <string name="empty_time">N / A</string>
     <string name="start">Start</string>
     <string name="elements_amount">Elements amount:</string>

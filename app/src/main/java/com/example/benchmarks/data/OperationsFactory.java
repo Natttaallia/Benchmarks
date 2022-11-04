@@ -5,6 +5,7 @@ import com.example.benchmarks.data.models.OperationItem;
 import com.example.benchmarks.domain.models.collection.CustomList;
 import com.example.benchmarks.domain.models.operation.AddOperation;
 import com.example.benchmarks.domain.models.operation.RemoveOperation;
+import com.example.benchmarks.domain.models.operation.SearchOperation;
 import com.example.benchmarks.domain.models.position.EndPosition;
 import com.example.benchmarks.domain.models.position.MiddlePosition;
 import com.example.benchmarks.domain.models.position.StartPosition;
@@ -41,7 +42,10 @@ public class OperationsFactory {
         arrayList.add(new OperationItem(new RemoveOperation(new CustomList<>(new CopyOnWriteArrayList(collections.component3()), middlePosition), position++), R.string.remove_m_cl));
         arrayList.add(new OperationItem(new RemoveOperation(new CustomList<>(new ArrayList(collections.component1()), endPosition), position++), R.string.remove_e_al));
         arrayList.add(new OperationItem(new RemoveOperation(new CustomList<>(new LinkedList(collections.component2()), endPosition), position++), R.string.remove_e_ll));
-        arrayList.add(new OperationItem(new RemoveOperation(new CustomList<>(new CopyOnWriteArrayList(collections.component3()), endPosition), position), R.string.remove_e_cl));
+        arrayList.add(new OperationItem(new RemoveOperation(new CustomList<>(new CopyOnWriteArrayList(collections.component3()), endPosition), position++), R.string.remove_e_cl));
+        arrayList.add(new OperationItem(new SearchOperation(new CustomList<>(new ArrayList(collections.component3())), position++), R.string.search_al));
+        arrayList.add(new OperationItem(new SearchOperation(new CustomList<>(new LinkedList(collections.component3())), position++), R.string.search_ll));
+        arrayList.add(new OperationItem(new SearchOperation(new CustomList<>(new CopyOnWriteArrayList(collections.component3())), position), R.string.search_cl));
         return arrayList;
     }
 

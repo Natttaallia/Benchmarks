@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.core.Observable;
 import kotlin.Triple;
 
 public class GetCollectionsUseCase {
-    private final Integer DEFAULT_ELEMENT = 7;
+    public static Integer DEFAULT_ELEMENT = 7;
 
     @NonNull
     public Observable<Triple> getCollections(int size) {
