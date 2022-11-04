@@ -1,25 +1,29 @@
 package com.example.benchmarks.domain.models.collection;
 
+import com.example.benchmarks.domain.models.position.Position;
+
 import java.util.List;
 
 public class CustomList<T extends List> extends CustomDataStructure<T> {
 
-    public CustomList(T data) {
+    Position position;
+
+    public CustomList(T data, Position position) {
         super(data);
+        this.position = position;
     }
 
     @Override
-    public int size() {
-        return data.size();
+    public void add(Integer element) {
+        data.add(computePosition(), element);
     }
 
     @Override
-    public void add(int index, Integer element) {
-        data.add(index, element);
+    public void remove() {
+        data.remove(computePosition());
     }
 
-    @Override
-    public void remove(int position) {
-        data.remove(position);
+    private int computePosition() {
+        return position.getPosition(data.size());
     }
 }

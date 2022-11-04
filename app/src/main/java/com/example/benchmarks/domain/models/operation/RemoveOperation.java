@@ -5,12 +5,12 @@ import com.example.benchmarks.domain.models.position.Position;
 
 public class RemoveOperation extends Operation {
 
-    public RemoveOperation(Position position, CustomDataStructure collection, int id) {
-        super(position, collection, id);
+    public RemoveOperation(CustomDataStructure collection, int id) {
+        super(collection, id);
     }
 
     @Override
     void execute() {
-        collection.remove(position.getPosition(collection.size()));
+        collection.remove();
     }
 }

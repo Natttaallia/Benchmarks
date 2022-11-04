@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.data.OperationItem;
+import com.example.benchmarks.data.models.OperationItem;
 
 import java.util.ArrayList;
 

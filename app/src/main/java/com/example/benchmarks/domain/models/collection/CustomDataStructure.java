@@ -8,9 +8,7 @@ public abstract class CustomDataStructure<T> {
         this.data = data;
     }
 
-    public abstract int size();
+    public abstract void add(Integer element);
 
-    public abstract void add(int index, Integer element);
-
-    public abstract void remove(int position);
+    public abstract void remove();
 }

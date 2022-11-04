@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.benchmarks.R;
-import com.example.benchmarks.data.OperationStatus;
+import com.example.benchmarks.data.models.OperationStatus;
 
 public class OperationViewHolder extends RecyclerView.ViewHolder {
     private final TextView textView;

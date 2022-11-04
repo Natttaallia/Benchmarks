@@ -1,20 +1,17 @@
 package com.example.benchmarks.app.ui.viewmodels;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.data.OperationsFactory;
-import com.example.benchmarks.data.OperationItem;
+import com.example.benchmarks.data.models.OperationItem;
 import com.example.benchmarks.domain.models.usecases.GetCollectionsUseCase;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import kotlin.Triple;

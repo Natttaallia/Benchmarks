@@ -1,16 +1,16 @@
 package com.example.benchmarks.domain.models.operation;
 
 import com.example.benchmarks.domain.models.collection.CustomDataStructure;
-import com.example.benchmarks.domain.models.position.Position;
 
 public class AddOperation extends Operation {
+    public static int ELEMENT = 1;
 
-    public AddOperation(Position position, CustomDataStructure collection, int id) {
-        super(position, collection, id);
+    public AddOperation(CustomDataStructure collection, int id) {
+        super(collection, id);
     }
 
     @Override
     void execute() {
-        collection.add(position.getPosition(collection.size()), 1);
+        collection.add(ELEMENT);
     }
 }

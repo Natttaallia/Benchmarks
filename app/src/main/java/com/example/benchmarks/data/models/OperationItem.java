@@ -1,4 +1,4 @@
-package com.example.benchmarks.data;
+package com.example.benchmarks.data.models;
 
 import androidx.annotation.StringRes;
 
