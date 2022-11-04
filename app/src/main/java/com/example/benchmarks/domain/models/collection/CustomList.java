@@ -2,7 +2,7 @@ package com.example.benchmarks.domain.models.collection;
 
 import java.util.List;
 
-public class CustomList<T extends List> extends CustomCollection<T> {
+public class CustomList<T extends List> extends CustomDataStructure<T> {
 
     public CustomList(T data) {
         super(data);

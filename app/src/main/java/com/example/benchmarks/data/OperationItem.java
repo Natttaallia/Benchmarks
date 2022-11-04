@@ -1,4 +1,4 @@
-package com.example.benchmarks.domain.models;
+package com.example.benchmarks.data;
 
 import androidx.annotation.StringRes;
 
@@ -7,7 +7,6 @@ import com.example.benchmarks.domain.models.operation.Operation;
 public class OperationItem {
     Operation operation;
     @StringRes int titleId;
-    Long time = 0L;
 
     public OperationItem(Operation operation, @StringRes int titleId) {
         this.operation = operation;
@@ -19,11 +18,13 @@ public class OperationItem {
     }
 
     public Long getTime() {
-        return time;
+        return operation.getTime();
     }
 
     public Operation getOperation() {
         return operation;
     }
+
+    public OperationStatus getStatus() {return operation.getStatus(); }
 
 }

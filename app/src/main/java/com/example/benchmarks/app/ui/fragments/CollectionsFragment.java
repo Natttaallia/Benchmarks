@@ -1,6 +1,7 @@
 package com.example.benchmarks.app.ui.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import com.example.benchmarks.app.ui.adapters.OperationsAdapter;
 import com.example.benchmarks.app.ui.viewmodels.CollectionsViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 public class CollectionsFragment extends Fragment {
     private TextInputLayout mOperationsAmountLayout;
@@ -46,14 +49,13 @@ public class CollectionsFragment extends Fragment {
         Button mOperationsAmountButton = view.findViewById(R.id.c_operations_amount_btn);
         initRecyclerView();
         observeCollectionSize();
-        observeOperations();
-        observeCollections();
         mOperationsAmountButton.setOnClickListener(this::onButtonClick);
     }
 
     private void observeCollectionSize() {
         ((MainActivity) getActivity()).getCollectionSize().observe(getViewLifecycleOwner(), size -> {
             viewModel.createCollections(size);
+            observeCollections();
         });
     }
 
@@ -61,12 +63,23 @@ public class CollectionsFragment extends Fragment {
         viewModel.collections.observe(getViewLifecycleOwner(), triple -> {
             viewModel.loadOperationsItem();
             mProgressBar.setVisibility(View.GONE);
+            observeOperations();
         });
     }
 
     private void observeOperations() {
         viewModel.operations.observe(getViewLifecycleOwner(), operationItems -> {
             mAdapter.setData(operationItems);
+            observeItemChanged();
+        });
+    }
+
+    private void observeItemChanged() {
+        viewModel.itemChangedPosition
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(position -> {
+            Log.e("pos", String.valueOf(position));
+            mAdapter.notifyItemChanged(position);
         });
     }
 

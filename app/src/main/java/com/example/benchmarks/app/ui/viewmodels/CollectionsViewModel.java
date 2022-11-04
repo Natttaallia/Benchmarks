@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.data.OperationsFactory;
-import com.example.benchmarks.domain.models.OperationItem;
+import com.example.benchmarks.data.OperationItem;
 import com.example.benchmarks.domain.models.usecases.GetCollectionsUseCase;
 
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import kotlin.Triple;
 
 public class CollectionsViewModel extends ViewModel {
@@ -31,6 +32,8 @@ public class CollectionsViewModel extends ViewModel {
 
     private final MutableLiveData<ArrayList<OperationItem>> _operations = new MutableLiveData<>();
     public LiveData<ArrayList<OperationItem>> operations = _operations;
+
+    public PublishSubject<Integer> itemChangedPosition = PublishSubject.create();
 
     public void createCollections(Integer size) {
         collectionSize = size;
@@ -52,8 +55,8 @@ public class CollectionsViewModel extends ViewModel {
         for (OperationItem operationItem : _operations.getValue()) {
             operationItem.getOperation().executeAndReturnUptime(operationsAmount)
                     .subscribeOn(Schedulers.computation())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(time -> Log.e("time", time.toString()));
+                    .observeOn(Schedulers.computation())
+                    .subscribe(pos -> itemChangedPosition.onNext(pos));
         }
     }
 

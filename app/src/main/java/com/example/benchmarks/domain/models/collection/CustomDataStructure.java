@@ -1,10 +1,10 @@
 package com.example.benchmarks.domain.models.collection;
 
-public abstract class CustomCollection<T> {
+public abstract class CustomDataStructure<T> {
 
     T data;
 
-    public CustomCollection(T data) {
+    public CustomDataStructure(T data) {
         this.data = data;
     }
 
