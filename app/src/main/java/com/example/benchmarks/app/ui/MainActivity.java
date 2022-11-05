@@ -12,16 +12,11 @@ import android.os.Bundle;
 import com.example.benchmarks.R;
 import com.example.benchmarks.app.ui.adapters.VPAdapter;
 import com.example.benchmarks.app.ui.dialogs.CollectionSizeDialog;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity implements CollectionSizeDialog.CollectionSizeDialogListener {
 
-    private final MutableLiveData<Integer> collectionSize = new MutableLiveData<>();
-
-    public LiveData<Integer> getCollectionSize() {
-        return collectionSize;
-    }
+    private final MutableLiveData<Integer> _collectionSize = new MutableLiveData<>();
+    public LiveData<Integer> collectionSize = _collectionSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +41,6 @@ public class MainActivity extends AppCompatActivity implements CollectionSizeDia
 
     @Override
     public void sendSize(int size) {
-        collectionSize.postValue(size);
+        _collectionSize.postValue(size);
     }
 }

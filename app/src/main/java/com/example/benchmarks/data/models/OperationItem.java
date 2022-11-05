@@ -1,30 +1,17 @@
 package com.example.benchmarks.data.models;
 
-import androidx.annotation.StringRes;
-
-import com.example.benchmarks.domain.models.operation.Operation;
-
 public class OperationItem {
-    Operation operation;
-    @StringRes int titleId;
+    public static Long OPERATION_TIME_DEFAULT = -1L;
 
-    public OperationItem(Operation operation, @StringRes int titleId) {
-        this.operation = operation;
-        this.titleId = titleId;
+    public Long time = OPERATION_TIME_DEFAULT;
+    public OperationStatus status = OperationStatus.READY;
+    String title;
+
+    public OperationItem(String titleId) {
+        this.title = titleId;
     }
 
-    public int getTitleId() {
-        return titleId;
+    public String getTitle() {
+        return title;
     }
-
-    public Long getTime() {
-        return operation.getTime();
-    }
-
-    public Operation getOperation() {
-        return operation;
-    }
-
-    public OperationStatus getStatus() {return operation.getStatus(); }
-
 }

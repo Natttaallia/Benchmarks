@@ -1,6 +1,6 @@
 package com.example.benchmarks.app.ui.adapters;
 
-import static com.example.benchmarks.domain.models.operation.Operation.OPERATION_TIME_DEFAULT;
+import static com.example.benchmarks.data.models.OperationItem.OPERATION_TIME_DEFAULT;
 
 import android.view.View;
 import android.widget.ProgressBar;
@@ -22,19 +22,18 @@ public class OperationViewHolder extends RecyclerView.ViewHolder {
         progressBar = itemView.findViewById(R.id.item_operation_pb);
     }
 
-    public void setTitle(int titleId, Long time) {
-        textView.setText(itemView.getContext().getString(titleId, getTime(time)));
+    public void setTitle(String title, Long time) {
+        textView.setText(getTitle(title, time));
     }
 
     public void setStatus(OperationStatus status) {
         progressBar.setVisibility(status == OperationStatus.LOADING ? View.VISIBLE : View.GONE);
     }
 
-    private String getTime(Long time) {
-        if (time.equals(OPERATION_TIME_DEFAULT)) return itemView.getContext().getString(R.string.empty_time);
-        return time.toString();
+    private String getTitle(String title, Long time) {
+        if (time.equals(OPERATION_TIME_DEFAULT)) return title + itemView.getContext().getString(R.string.empty_time);
+        return title + itemView.getContext().getString(R.string.time_ms, time);
     }
-
 
 }
 

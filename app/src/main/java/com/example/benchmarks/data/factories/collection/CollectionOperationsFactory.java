@@ -1,6 +1,6 @@
 package com.example.benchmarks.data.factories.collection;
 
-import com.example.benchmarks.data.models.OperationItem;
+import com.example.benchmarks.domain.models.operation.Operation;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,8 +14,8 @@ public class CollectionOperationsFactory {
     CollectionRemoveOperationsFactory removeOperationsFactory = new CollectionRemoveOperationsFactory();
     CollectionSearchOperationsFactory searchOperationsFactory = new CollectionSearchOperationsFactory();
 
-    public ArrayList<OperationItem> getCollectionsOperations(Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>> collections) {
-        ArrayList<OperationItem> arrayList = new ArrayList<>();
+    public ArrayList<Operation> getCollectionsOperations(Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>> collections) {
+        ArrayList<Operation> arrayList = new ArrayList<>();
         arrayList.addAll(addOperationsFactory.getCollectionsOperations(collections));
         arrayList.addAll(removeOperationsFactory.getCollectionsOperations(collections));
         arrayList.addAll(searchOperationsFactory.getCollectionsOperations(collections));

@@ -17,13 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.benchmarks.R;
 import com.example.benchmarks.app.ui.MainActivity;
 import com.example.benchmarks.app.ui.adapters.OperationsAdapter;
-import com.example.benchmarks.app.ui.viewmodels.CollectionsViewModel;
+import com.example.benchmarks.app.viewmodels.CollectionsViewModel;
+import com.example.benchmarks.data.factories.OperationItemsFactory;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 public class CollectionsFragment extends Fragment {
+
+    OperationItemsFactory operationItemsFactory = new OperationItemsFactory();
+
     private TextInputLayout mOperationsAmountLayout;
     private TextInputEditText mOperationsAmountInput;
     private ProgressBar mProgressBar;
@@ -53,38 +57,24 @@ public class CollectionsFragment extends Fragment {
     }
 
     private void observeCollectionSize() {
-        ((MainActivity) getActivity()).getCollectionSize().observe(getViewLifecycleOwner(), size -> {
+        if (getActivity() == null) return;
+        ((MainActivity) getActivity()).collectionSize.observe(getViewLifecycleOwner(), size -> {
             viewModel.createCollections(size);
-            observeCollections();
+            observeInitialization();
         });
     }
 
-    private void observeCollections() {
-        viewModel.collections.observe(getViewLifecycleOwner(), triple -> {
-            viewModel.loadOperationsItem();
-            mProgressBar.setVisibility(View.GONE);
-            observeOperations();
-        });
-    }
-
-    private void observeOperations() {
-        viewModel.operations.observe(getViewLifecycleOwner(), operationItems -> {
-            mAdapter.setData(operationItems);
-            observeItemChanged();
-        });
-    }
-
-    private void observeItemChanged() {
-        viewModel.itemChangedPosition
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(position -> {
-            Log.e("pos", String.valueOf(position));
-            mAdapter.notifyItemChanged(position);
+    private void observeInitialization() {
+        viewModel.isOperationsInitialize.observe(getViewLifecycleOwner(), isCompleted -> {
+            if (isCompleted) {
+                mProgressBar.setVisibility(View.GONE);
+            }
         });
     }
 
     private void onButtonClick(View view) {
         if (viewModel.checkOperationsAmount(mOperationsAmountInput.getText().toString())) {
+            mAdapter.startLoading();
             viewModel.startCalculation();
         } else {
             setInputErrorText(getString(R.string.invalid_input));
@@ -100,5 +90,13 @@ public class CollectionsFragment extends Fragment {
         mAdapter = new OperationsAdapter();
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setData(operationItemsFactory.getOperationItems(getResources().getStringArray(R.array.collection_operation_titles)));
+        observeItemChanged();
+    }
+
+    private void observeItemChanged() {
+        viewModel.itemChangedPosition
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(pair -> mAdapter.setResultForItem(pair.first, pair.second));
     }
 }

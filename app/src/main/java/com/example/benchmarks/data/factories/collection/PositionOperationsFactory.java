@@ -1,9 +1,6 @@
 package com.example.benchmarks.data.factories.collection;
 
-import androidx.annotation.StringRes;
-
-import com.example.benchmarks.R;
-import com.example.benchmarks.data.models.OperationItem;
+import com.example.benchmarks.domain.models.operation.Operation;
 import com.example.benchmarks.domain.models.position.EndPosition;
 import com.example.benchmarks.domain.models.position.MiddlePosition;
 import com.example.benchmarks.domain.models.position.Position;
@@ -22,31 +19,33 @@ public abstract class PositionOperationsFactory {
     MiddlePosition middlePosition = new MiddlePosition();
     EndPosition endPosition = new EndPosition();
 
-    public ArrayList<OperationItem> getCollectionsOperations(Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>> collections) {
-        ArrayList<OperationItem> arrayList = new ArrayList<>();
-        arrayList.add(getOperationItemArrayList(collections.component1(), startPosition, R.string.add_b_al));
-        arrayList.add(getOperationItemLinkedList(collections.component2(), startPosition, R.string.add_b_ll));
-        arrayList.add(getOperationItemCopyList(collections.component3(), startPosition, R.string.add_b_cl));
-        arrayList.add(getOperationItemArrayList(collections.component1(), middlePosition, R.string.add_m_al));
-        arrayList.add(getOperationItemLinkedList(collections.component2(), middlePosition, R.string.add_m_ll));
-        arrayList.add(getOperationItemCopyList(collections.component3(), middlePosition, R.string.add_m_cl));
-        arrayList.add(getOperationItemArrayList(collections.component1(), endPosition, R.string.add_e_al));
-        arrayList.add(getOperationItemLinkedList(collections.component2(), endPosition, R.string.add_e_ll));
-        arrayList.add(getOperationItemCopyList(collections.component3(), endPosition, R.string.add_e_cl));
+    public ArrayList<Operation> getCollectionsOperations(Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>> collections) {
+        ArrayList<Operation> arrayList = new ArrayList<>();
+        arrayList.addAll(getTriple(collections, startPosition));
+        arrayList.addAll(getTriple(collections, middlePosition));
+        arrayList.addAll(getTriple(collections, endPosition));
         return arrayList;
     }
 
-    OperationItem getOperationItemArrayList(List<Integer> data, Position position, @StringRes int title) {
-        return getOperationItem(new ArrayList<>(data), position, title);
+    ArrayList<Operation> getTriple(Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>> collections, Position position) {
+        ArrayList<Operation> arrayList = new ArrayList<>();
+        arrayList.add(getOperationArrayList(collections.component1(), position));
+        arrayList.add(getOperationLinkedList(collections.component2(), position));
+        arrayList.add(getOperationCopyList(collections.component3(), position));
+        return arrayList;
     }
 
-    OperationItem getOperationItemLinkedList(List<Integer> data, Position position, @StringRes int title) {
-        return getOperationItem(new LinkedList<>(data), position, title);
+    Operation getOperationArrayList(List<Integer> data, Position position) {
+        return getOperation(new ArrayList<>(data), position);
     }
 
-    OperationItem getOperationItemCopyList(List<Integer> data, Position position, @StringRes int title) {
-        return getOperationItem(new CopyOnWriteArrayList<>(data), position, title);
+    Operation getOperationLinkedList(List<Integer> data, Position position) {
+        return getOperation(new LinkedList<>(data), position);
     }
 
-    abstract OperationItem getOperationItem(List<Integer> integers, Position position, int title);
+    Operation getOperationCopyList(List<Integer> data, Position position) {
+        return getOperation(new CopyOnWriteArrayList<>(data), position);
+    }
+
+    abstract Operation getOperation(List<Integer> integers, Position position);
 }

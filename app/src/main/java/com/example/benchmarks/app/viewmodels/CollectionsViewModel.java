@@ -1,17 +1,20 @@
-package com.example.benchmarks.app.ui.viewmodels;
+package com.example.benchmarks.app.viewmodels;
+
+import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.benchmarks.data.factories.collection.CollectionOperationsFactory;
-import com.example.benchmarks.data.models.OperationItem;
+import com.example.benchmarks.domain.models.operation.Operation;
 import com.example.benchmarks.domain.models.usecases.GetCollectionsUseCase;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import kotlin.Triple;
@@ -21,22 +24,25 @@ public class CollectionsViewModel extends ViewModel {
     private final GetCollectionsUseCase getCollectionsUseCase = new GetCollectionsUseCase();
     private final CollectionOperationsFactory operationsFactory = new CollectionOperationsFactory();
 
-    private final MutableLiveData<Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>>> _collections = new MutableLiveData();
-    public LiveData<Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>>> collections = _collections;
+    private Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>> collections;
+    private ArrayList<Operation> operations;
+
+    private final MutableLiveData<Boolean> _isOperationsInitialize = new MutableLiveData<>(false);
+    public LiveData<Boolean> isOperationsInitialize = _isOperationsInitialize;
+
+    public PublishSubject<Pair<Integer, Long>> itemChangedPosition = PublishSubject.create();
 
     int collectionSize;
     int operationsAmount;
-
-    private final MutableLiveData<ArrayList<OperationItem>> _operations = new MutableLiveData<>();
-    public LiveData<ArrayList<OperationItem>> operations = _operations;
-
-    public PublishSubject<Integer> itemChangedPosition = PublishSubject.create();
 
     public void createCollections(Integer size) {
         collectionSize = size;
         getCollectionsUseCase.getCollections(collectionSize)
                 .subscribeOn(Schedulers.computation())
-                .subscribe(_collections::postValue);
+                .subscribe(data -> {
+                    collections = data;
+                    loadOperations();
+                });
     }
 
     public boolean checkOperationsAmount(String text) {
@@ -49,15 +55,20 @@ public class CollectionsViewModel extends ViewModel {
     }
 
     public void startCalculation() {
-        for (int i = 0; i < _operations.getValue().size(); i++) {
-            _operations.getValue().get(i).getOperation().executeAndReturnUptime(i, operationsAmount)
+        for (int i = 0; i < operations.size(); i++) {
+            operations.get(i).executeAndReturnUptime(i, operationsAmount)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(Schedulers.computation())
-                    .subscribe(pos -> itemChangedPosition.onNext(pos));
+                    .subscribe(pair -> itemChangedPosition.onNext(pair));
         }
     }
 
-    public void loadOperationsItem() {
-        _operations.postValue(operationsFactory.getCollectionsOperations(_collections.getValue()));
+    void loadOperations() {
+        Single.just(operationsFactory.getCollectionsOperations(collections))
+                .subscribeOn(Schedulers.computation())
+                .subscribe(data -> {
+                    operations = data;
+                    _isOperationsInitialize.postValue(true);
+                });
     }
 }
