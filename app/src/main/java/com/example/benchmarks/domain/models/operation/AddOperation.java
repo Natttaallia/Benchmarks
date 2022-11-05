@@ -3,14 +3,13 @@ package com.example.benchmarks.domain.models.operation;
 import com.example.benchmarks.domain.models.collection.CustomDataStructure;
 
 public class AddOperation extends Operation {
-    public static int ELEMENT = 1;
 
-    public AddOperation(CustomDataStructure collection, int id) {
-        super(collection, id);
+    public AddOperation(CustomDataStructure collection) {
+        super(collection);
     }
 
     @Override
     void execute() {
-        collection.add(ELEMENT);
+        collection.add();
     }
 }

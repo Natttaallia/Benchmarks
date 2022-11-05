@@ -4,8 +4,8 @@ import com.example.benchmarks.domain.models.collection.CustomDataStructure;
 
 public class SearchOperation extends Operation {
 
-    public SearchOperation(CustomDataStructure collection, int id) {
-        super(collection, id);
+    public SearchOperation(CustomDataStructure collection) {
+        super(collection);
     }
 
     @Override

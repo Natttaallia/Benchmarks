@@ -10,27 +10,25 @@ public abstract class Operation {
     public static Long OPERATION_TIME_DEFAULT = -1L;
 
     CustomDataStructure collection;
-    int id;
     Long time = OPERATION_TIME_DEFAULT;
     OperationStatus status = OperationStatus.READY;
 
-    Operation(CustomDataStructure collection, int id) {
+    Operation(CustomDataStructure collection) {
         this.collection = collection;
-        this.id = id;
     }
 
-    public Observable<Integer> executeAndReturnUptime(int operationsAmount) {
+    public Observable<Integer> executeAndReturnUptime(int index, int operationsAmount) {
         return Observable.defer(() -> emitter -> {
             time = OPERATION_TIME_DEFAULT;
             status = OperationStatus.LOADING;
-            emitter.onNext(id);
+            emitter.onNext(index);
             long startTime = System.currentTimeMillis();
             for (int i = 0; i < operationsAmount; i++) {
                 execute();
             }
             time = System.currentTimeMillis() - startTime;
             status = OperationStatus.READY;
-            emitter.onNext(id);
+            emitter.onNext(index);
         });
     }
     abstract void execute();

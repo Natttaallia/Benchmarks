@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.benchmarks.data.OperationsFactory;
+import com.example.benchmarks.data.factories.collection.CollectionOperationsFactory;
 import com.example.benchmarks.data.models.OperationItem;
 import com.example.benchmarks.domain.models.usecases.GetCollectionsUseCase;
 
@@ -19,7 +19,7 @@ import kotlin.Triple;
 public class CollectionsViewModel extends ViewModel {
 
     private final GetCollectionsUseCase getCollectionsUseCase = new GetCollectionsUseCase();
-    private final OperationsFactory operationsFactory = new OperationsFactory();
+    private final CollectionOperationsFactory operationsFactory = new CollectionOperationsFactory();
 
     private final MutableLiveData<Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>>> _collections = new MutableLiveData();
     public LiveData<Triple<ArrayList<Integer>, LinkedList<Integer>, CopyOnWriteArrayList<Integer>>> collections = _collections;
@@ -49,8 +49,8 @@ public class CollectionsViewModel extends ViewModel {
     }
 
     public void startCalculation() {
-        for (OperationItem operationItem : _operations.getValue()) {
-            operationItem.getOperation().executeAndReturnUptime(operationsAmount)
+        for (int i = 0; i < _operations.getValue().size(); i++) {
+            _operations.getValue().get(i).getOperation().executeAndReturnUptime(i, operationsAmount)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(Schedulers.computation())
                     .subscribe(pos -> itemChangedPosition.onNext(pos));

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class CustomList<T extends List> extends CustomDataStructure<T> {
 
+    public static int ELEMENT = 1;
     Position position;
 
     public CustomList(T data) {
@@ -20,8 +21,8 @@ public class CustomList<T extends List> extends CustomDataStructure<T> {
     }
 
     @Override
-    public void add(Integer element) {
-        data.add(computePosition(), element);
+    public void add() {
+        data.add(computePosition(), ELEMENT);
     }
 
     @Override
